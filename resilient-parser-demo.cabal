@@ -1,0 +1,22 @@
+cabal-version:      3.14
+name:               resilient-parser-demo
+version:            0.1.0.0
+synopsis:           Demo for resilient recursive parsing
+license:            MIT
+license-file:       LICENSE
+author:             András Kovács
+maintainer:         puttamalac@gmail.com
+category:           Language
+build-type:         Simple
+
+extra-doc-files:
+    README.md
+
+executable resilient-parser-demo
+    main-is:          Main.hs
+    build-depends:
+        base ^>=4.22.0.0
+      , containers
+      , pretty-show
+    hs-source-dirs:   src
+    default-language: GHC2024
