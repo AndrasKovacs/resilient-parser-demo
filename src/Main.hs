@@ -192,7 +192,7 @@ infixl 6 <|
 data Ident_ e
   = Ident Char
   | IdentError (Maybe (Ident_ e)) e
-  deriving (Show, Functor, Foldable, Traversable)
+  deriving (Show, Foldable)
 
 data Tm_ e
   = Var (Ident_ e)
@@ -203,14 +203,13 @@ data Tm_ e
   | Let (Ident_ e) (Tm_ e) (Tm_ e)
   | Lam (Ident_ e) (Tm_ e)
   | TmError (Maybe (Tm_ e)) e
-  deriving (Show, Functor, Foldable, Traversable)
+  deriving (Show, Foldable)
 
 type Tm = Tm_ Error
 type Ident = Ident_ Error
 
 instance EmbedError Tm    where mkError = TmError
 instance EmbedError Ident where mkError = IdentError
-instance EmbedError ()    where mkError = \_ _ -> ()
 
 
 -- The parser
@@ -275,8 +274,9 @@ testParser s = pPrint $ parse s
 testHighlight :: String -> IO ()
 testHighlight s = do
   let errors =
-        map (\(Error _ s s' s'') -> (s, s', s'')) $
-        toList $ parse s
+          map (\(Error _ s s' s'') -> (s, s', s''))
+        $ toList -- toList returns all errors in the Tm
+        $ parse s
   putStr $ highlight s errors
 
 src :: String
