@@ -14,7 +14,6 @@ import Text.Show.Pretty (pPrint)
 -- Errors & rendering
 --------------------------------------------------------------------------------
 
-type Recovery = Set Char
 type Msg      = String
 type Pos      = String
 data Error    = Error Msg Pos Pos Pos
@@ -53,7 +52,7 @@ highlight s es = let
     else if Set.member i errPoss then
       "^"
     else if Set.member i errSpans then
-      "─"
+      "-"
     else
       " "
 
@@ -67,6 +66,8 @@ highlight s es = let
 
 -- Parser library
 --------------------------------------------------------------------------------
+
+type Recovery = Set Char
 
 data Res a
   = OK a String
